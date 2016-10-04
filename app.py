@@ -39,12 +39,36 @@ def login():
         else:
             return render_template("login.html")
 
+@app.route("/adlogin", methods=["GET", "POST"])
+@app.route("/adlogin/", methods=["GET", "POST"])
+def adlogin():
+    if request.method == "GET":
+        return render_template("login.html")
+    else:
+        email = request.form['email']
+        pwd = request.form['pwd']
+
+        if email=="admin" and pwd=="StuySU2017":
+            session['logged_in'] = True
+            session['email'] = email
+            session['pwd'] = pwd
+            return redirect(url_for("adview"))
+        else:
+            return render_template("login.html")
+
 
 
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     cal = utils.calendardict()
     return render_template("dashboard.html", L = cal)
+
+
+
+
+@app.route("/adview", methods=["GET", "POST"])
+def adview():
+    return render_template("adview.html")
 
 
 
