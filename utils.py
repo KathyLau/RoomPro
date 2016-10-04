@@ -3,6 +3,8 @@ from pymongo import MongoClient
 import hashlib
 import re
 from random import randrange
+import datetime
+from calendar import monthrange
 #test
 
 connection = MongoClient("localhost", 27017, connect=False)
@@ -70,6 +72,45 @@ def confirm_user(email, pwd):
         if check[0]['pwd']== pwd:
             return True
     return False
+
+
+"""
+Makes a calendar - dictionary
+Args:
+    day - day of the week
+    date - date of the month
+Returns:
+    dictionary in day: [dates] format
+"""
+def calendardict():
+    d={}
+    today = str(datetime.date.today())
+    month = int(today.split('-')[1])
+    year = int(today.split('-')[0])
+    now = list(monthrange(year, month)) # returns [weekday of first day, number of days]
+    currPos = 0
+    date = 1
+    L = []
+    tempL = []
+    while currPos < 7:
+        if date < 2 and now[0] != currPos:
+            tempL += [0]
+        else:
+            tempL += [date]
+            date += 1
+        currPos += 1
+    L += [tempL]
+
+    tempL = []
+    while date < now[1] + 1:
+        if len(tempL) == 7:
+            L += [tempL]
+            tempL = []
+        else:
+            tempL += [date]
+            date +=1
+    L += [tempL]
+    return L
 
 
 """

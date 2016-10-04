@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import utils
 import json
+import calendar
 
 app = Flask(__name__)
 app.secret_key = 'dcb61f28eafb8771213f3e0612422b8d'
@@ -30,13 +31,21 @@ def login():
         email = request.form['email']
         pwd = request.form['pwd']
 
-        if utils.confirm_user(email, osis):
+        if utils.confirm_user(email, pwd):
             session['logged_in'] = True
             session['email'] = email
             session['pwd'] = pwd
             return redirect(url_for("dashboard"))
         else:
             return render_template("login.html")
+
+
+
+@app.route("/dashboard", methods=["GET", "POST"])
+def dashboard():
+    cal = utils.calendardict()
+    return render_template("dashboard.html", L = cal)
+
 
 
 @app.route("/logout", methods=["GET"])

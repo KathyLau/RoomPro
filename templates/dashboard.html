@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+
+{% block content %}
+<center>
+  <br>
+  <br>
+<p  style="font-size:27px">
+          <b>  Welcome </b>
+  </p>
+<table>
+  <tr>
+    <td> Mo </td>
+    <td> Tu </td>
+    <td> We </td>
+    <td> Th </td>
+    <td> Fr </td>
+    <td> Sa </td>
+    <td> Su </td>
+  </tr>
+
+
+  {% for item in L %}
+<tr>
+    {% for i in item %}
+
+    <td>{{i}}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+  <br>
+
+</center>
+{% endblock %}
