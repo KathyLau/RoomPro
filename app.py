@@ -33,7 +33,7 @@ def login():
         if utils.confirm_user(email, osis):
             session['logged_in'] = True
             session['email'] = email
-            session['osis'] = osis
+            session['pwd'] = pwd
             return redirect(url_for("dashboard"))
         else:
             return render_template("login.html")
