@@ -1,12 +1,7 @@
 {% extends "index.html" %}
 
 {% block content %}
-<center>
-  <br>
-  <br>
-<p  style="font-size:27px">
-          <b>  Welcome </b>
-  </p>
+
 <table>
   <tr>
     <td> Mo </td>
@@ -23,11 +18,20 @@
 <tr>
     {% for i in item %}
 
-    <td>{{i}}</td>
+    <td>
+      <a href="#">
+      {{i}}
+    </a>
+    </td>
     {% endfor %}
   </tr>
   {% endfor %}
   <br>
 
+
+<center>
+
+    </p><a href="#" onclick="toggle_visibility('foo');">Click here to toggle visibility of element #foo</a>
+  <div id="foo">This is foo</div>
 </center>
 {% endblock %}

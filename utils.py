@@ -92,14 +92,15 @@ def calendardict():
     date = 1
     L = []
     tempL = []
-    while currPos < 7:
-        if date < 2 and now[0] != currPos:
-            tempL += [0]
-        else:
-            tempL += [date]
-            date += 1
-        currPos += 1
-    L += [tempL]
+    if now[0] != currPos:
+        while currPos < 7:
+            if date < 2 and now[0] != currPos:
+                tempL += [0]
+            else:
+                tempL += [date]
+                date += 1
+            currPos += 1
+        L += [tempL]
 
     tempL = []
     while date < now[1] + 1:
