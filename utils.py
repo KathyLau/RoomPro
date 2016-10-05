@@ -115,31 +115,51 @@ def calendardict():
 
 
 """
-Adds a locker number to request list
+Adds rooms to room list 5 at a time
 Args:
-  f_name: locker holder's name
-  u_name: user name
+  r<n>: room number
 Return:
-  True if user exists
-  False if user does not exist
+  True if succeded
+  False if not
 """
-def add_request(u_name, f_name):
-    check = list(db.users.find({'email':f_name}))
+def add_room(l):
+    for room in l:
+        check = list(db.rooms.find({'room': room}))
 
-    if check['trade'] != 'no':
-        newlist = check[0]['requestL']
+        today = str(datetime.date.today())
+        month = str(today.split('-')[1])
+        year = str(today.split('-')[0])
+        date = year + '-' + month + '-'
+        d = 1
 
-        newlist.append(u_name)
+        if check == []:
+            while d < 32:
+                t = {'day': date + str(d) , 'room':room, 'club': ''}
+                d+=1
+                db.rooms.insert(t)
 
-        db.users.update(
+"""
+adds club name to end of date-room-club
+Args:
+    d = date
+    r = room #
+    e = club name
+Return:
+  True if succeded
+  False if not
+"""
+def book_room(d, r, e):
+    check = list(db.rooms.find({'day': d}))
+    if check != []:
+        db.rooms.update(
             {
-                'email': f_name
+                'day': d,
+                'room' : r
             },
             {'$set':
              {
-                 "requestL": newlist
+                 "club": e
              }
          }
-        )
+         )
         return True
-    return False

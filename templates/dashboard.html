@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block content %}
-
+<br>
 <table>
   <tr>
     <td> Mo </td>
@@ -20,18 +20,25 @@
 
     <td>
       <a href="#">
-      {{i}}
+        <FORM METHOD="POST" >
+          <INPUT TYPE="submit" name="day" VALUE="{{i}}">
+
     </a>
     </td>
     {% endfor %}
   </tr>
   {% endfor %}
+</table>
+<br>
   <br>
 
-
 <center>
+      {% for item in G %}
+      {% if item["club"] == "" %}
+       <INPUT TYPE="submit" name="day" VALUE="{{item['room']}}"> 
+        {% endif %}
+  {% endfor %}
+</FORM>
 
-    </p><a href="#" onclick="toggle_visibility('foo');">Click here to toggle visibility of element #foo</a>
-  <div id="foo">This is foo</div>
 </center>
 {% endblock %}
