@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% block content %}
+<br>
+
+  {% for item in L %}
+    {{item['day']}}
+    :
+      {{item['club']}}
+    :
+      {{item['room']}}
+    <br>
+
+  {% endfor %}
+  <br>
+
+<center>
+
+</center>
+{% endblock %}

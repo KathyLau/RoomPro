@@ -16,13 +16,15 @@
 
   {% for item in L %}
 <tr>
-    {% for i in item %}
+
+    {% for i in item[:] %}
 
     <td>
+      {% if i != 0 %}
       <a href="#">
         <FORM METHOD="POST" >
           <INPUT TYPE="submit" name="day" VALUE="{{i}}">
-
+            {% endif %}
     </a>
     </td>
     {% endfor %}
@@ -32,10 +34,32 @@
 <br>
   <br>
 
+<style>
+input[type=text] {
+    padding:5px;
+    border:2px solid #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+input[type=text]:focus {
+    border-color:#333;
+}
+
+input[type=submit] {
+    padding:5px 15px;
+    background:#ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+</style>
+
 <center>
       {% for item in G %}
       {% if item["club"] == "" %}
-       <INPUT TYPE="submit" name="day" VALUE="{{item['room']}}"> 
+       <INPUT TYPE="submit" name="day" id="style" VALUE="{{item['room']}}">
         {% endif %}
   {% endfor %}
 </FORM>

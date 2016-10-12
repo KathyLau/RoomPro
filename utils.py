@@ -162,4 +162,79 @@ def book_room(d, r, e):
              }
          }
          )
+        email(e, "Room Booking", "You are now booked for " + str(r) + " on " + str(d) )
         return True
+
+"""
+*admin usage only
+cancel a booking
+Args:
+    d = date
+    r = room #
+Return:
+  True if succeded
+  False if not
+"""
+def del_room(d, r, c):
+    check = list(db.rooms.find({'day': d}))
+    if check != []:
+        db.rooms.update(
+            {
+                'day': d,
+                'room' : r
+            },
+            {'$set':
+             {
+                 "club": ''
+             }
+         }
+         )
+        email(c, "Booking Cancelled", "Your room booking on " + d + " is now cancelled")
+        return True
+
+"""
+Returns hashed password
+Args:
+    name - email address to send to
+Returns:
+    boolean if email was sent
+"""
+def email(name, subject, message):
+  send=True
+  TO=name
+  SUBJECT= subject
+  #randint = str(randrange(1000000000))
+  #TEXT="Your user name is " + name + '.' + "Your verification id is " + randint
+
+  TEXT= name + ", " + message
+
+  gmail_sender="dev@stuyclubpub.org"
+  gmail_passwd="dev2017"
+
+  server= smtplib.SMTP('smtp.gmail.com',587)
+  server.ehlo()
+  server.starttls()
+  server.ehlo
+  server.login(gmail_sender, gmail_passwd)
+
+  BODY='\r\n'.join([
+       'To: %s' % TO,
+       'From: %s' % gmail_sender,
+       'Subject: %s' % SUBJECT,
+       '',
+       TEXT
+       ])
+
+  #if name[-9:]=='@stuy.edu':
+  try:
+      server.sendmail(gmail_sender, TO, BODY)
+      print 'email sent'
+      return randint
+  except:
+      print 'Error in sending email'
+  #else:
+    #print'Please use a stuy.edu email address'
+    #send=False
+  server.quit()
+  return randint
+  #return send

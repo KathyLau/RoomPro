@@ -5,11 +5,27 @@
 
 <center>
 
+<table>
+<tr> <td> Date of Booking </td> <td> Club </td> <td> Room </td> <td> Cancel Booking</td></tr>
+{% for item in L %}
+<tr>
+  <td>
+{{item['day'][5:]}} </td>
+<td>
+{{item['club']}}
+</td>
+<td>
+{{item['room']}}
+</td>
 
-  Requests
-{{L}}
+<td>
+<FORM method = "POST">
+  <button TYPE="submit" name="del" id="style" VALUE="{{item['day'] + ',' + item['room'] + ',' + item['club']}}">Delete </button>
+</FORM>
+</td>
+</tr>
 
+{% endfor %}
+</table>
 </center>
-</p><a href="#" onclick="toggle_visibility('foo');">Click here to toggle visibility of element #foo</a>
-<div id="foo">This is foo</div>
 {% endblock %}

@@ -78,8 +78,15 @@ def dashboard():
         else:
             session['room'] = d
             utils.book_room(session['day'], session['room'], session['email'])
-            return "You've booked " + session['room'] + " for " + session['day'] + "!"
+            return redirect(url_for("view"))
+            #return "You've booked " + session['room'] + " for " + session['day'] + "!"
 
+
+@app.route("/view", methods=["GET", "POST"])
+def view():
+    if request.method=="GET":
+        check = list(utils.db.rooms.find({'club': session['email']}))
+        return render_template("view.html", L = check)
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
@@ -105,13 +112,27 @@ def dele():
 
 @app.route("/adview", methods=["GET", "POST"])
 def adview():
-    return render_template("adview.html")
+    if request.method=="POST":
+        info = request.form['del']
+        day = info.split(',')[0]
+        room = info.split(',')[1]
+        club = info.split(',')[2]
+        utils.del_room(day, room, club)
+        return redirect(url_for("adview"))
+    if request.method == "GET":
+        check = list(utils.db.rooms.find())
+        newcheck = []
+        for item in check:
+            if item['club'] != '':
+                newcheck.append(item)
+        return render_template("adview.html", L = sorted(newcheck, key=lambda k: k['day']))
 
 
 
 @app.route("/logout", methods=["GET"])
+@app.route("/logout/", methods=["GET"])
 def logout():
-    session["logged_in"] = False
+    session['logged_in'] = False
     return render_template("index.html")
 
 
