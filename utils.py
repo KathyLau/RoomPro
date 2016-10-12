@@ -150,6 +150,7 @@ Return:
 """
 def book_room(d, r, e):
     check = list(db.rooms.find({'day': d}))
+    email(e, "Room Booking", "You are now booked for " + str(r) + " on " + str(d) )
     if check != []:
         db.rooms.update(
             {
@@ -162,7 +163,6 @@ def book_room(d, r, e):
              }
          }
          )
-        email(e, "Room Booking", "You are now booked for " + str(r) + " on " + str(d) )
         return True
 
 """
