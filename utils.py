@@ -50,7 +50,7 @@ Returns:
 def register_user(name, email, pwd):
     check = list(db.users.find({'email':email}))
     if check == []:
-        t = {'name':name, 'email': email, 'pwd': pwd }
+        t = {'name':name, 'email': email, 'pwd': hash(pwd) }
         db.users.insert(t)
         return True
     return False
@@ -69,7 +69,7 @@ def confirm_user(email, pwd):
     check = list(db.users.find({'email':email}))
 
     if check != []:
-        if check[0]['pwd']== pwd:
+        if check[0]['pwd']== hash(pwd):
             return True
     return False
 
