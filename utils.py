@@ -229,12 +229,12 @@ def email(name, subject, message):
   try:
       server.sendmail(gmail_sender, TO, BODY)
       print 'email sent'
-      return randint
+      return True
   except:
       print 'Error in sending email'
   #else:
     #print'Please use a stuy.edu email address'
     #send=False
   server.quit()
-  return randint
+  return True
   #return send
