@@ -13,7 +13,7 @@
     <td> Su </td>
   </tr>
 
-
+    <FORM METHOD="POST" >
   {% for item in L %}
 <tr>
 
@@ -22,7 +22,7 @@
     <td>
       {% if i != 0 %}
       <a href="#">
-        <FORM METHOD="POST" >
+
           <INPUT TYPE="submit" name="day" VALUE="{{i}}">
             {% endif %}
     </a>
