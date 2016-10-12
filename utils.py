@@ -209,7 +209,7 @@ def email(name, subject, message):
   TEXT= name + ", " + message
 
   gmail_sender="dev@stuyclubpub.org"
-  gmail_passwd="dev2017"
+  gmail_passwd="dev201617"
 
   server= smtplib.SMTP('smtp.gmail.com',587)
   server.ehlo()
