@@ -106,7 +106,19 @@ def add():
 
 @app.route("/del", methods=["GET", "POST"])
 def dele():
-    return render_template("del.html")
+    if request.method=="GET":
+        return render_template("del.html")
+    else:
+        r1 = request.form["room1"]
+        r2 = request.form["room2"]
+        r3 = request.form["room3"]
+        r4 = request.form["room4"]
+        r5 = request.form["room5"]
+        L = [r1,r2,r3,r4,r5]
+        for r in L:
+            if len(r) > 2:
+                utils.takeoff_room(r)
+        return redirect(url_for("add"))
 
 
 

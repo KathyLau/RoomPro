@@ -9,6 +9,7 @@ from calendar import monthrange
 
 connection = MongoClient("localhost", 27017, connect=False)
 db = connection['database']
+collection = db['rooms']
 
 """
 Returns hashed password
@@ -73,7 +74,6 @@ def confirm_user(email, pwd):
             return True
     return False
 
-
 """
 Makes a calendar - dictionary
 Args:
@@ -114,6 +114,11 @@ def calendardict():
     return L
 
 
+
+"""
+~~-----------------------------ADMIN------------------------------------~~
+"""
+
 """
 Adds rooms to room list 5 at a time
 Args:
@@ -132,7 +137,7 @@ def add_room(l):
         date = year + '-' + month + '-'
         d = 1
 
-        if check == []:
+        if  len(room)>2 and check == []:
             while d < 32:
                 t = {'day': date + str(d) , 'room':room, 'club': ''}
                 d+=1
@@ -165,6 +170,37 @@ def book_room(d, r, e):
          )
         return True
 
+
+"""
+*admin usage only
+change room number of a club
+Args:
+    d = date
+    r = room #
+    c = club number
+    r2 = new room #
+Return:
+  True if succeded
+  False if not
+"""
+def change_room(d, r2, c):
+    check = list(db.rooms.find({'day': d}))
+    if check != []:
+        db.rooms.update(
+            {
+                'day': d,
+                'club': c
+            },
+            {'$set':
+             {
+                 'room' : r2
+             }
+         }
+         )
+        email(c, "Booking Changed", "Your room booking on " + d + " is now in room " + r2)
+        return True
+
+
 """
 *admin usage only
 cancel a booking
@@ -192,6 +228,24 @@ def del_room(d, r, c):
         email(c, "Booking Cancelled", "Your room booking on " + d + " is now cancelled")
         return True
 
+
+"""
+*admin usage only
+take a room off
+Args:
+    r = room #
+Return:
+  True if succeded
+  False if not
+"""
+def takeoff_room(r):
+    check = list(db.rooms.find({'room': r}))
+    if check != []:
+        collection.remove({'room' : r})
+        return True
+    return False
+
+    
 """
 Returns hashed password
 Args:

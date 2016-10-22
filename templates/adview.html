@@ -6,7 +6,7 @@
 <center>
 
 <table>
-<tr> <td> Date of Booking </td> <td> Club </td> <td> Room </td> <td> Cancel Booking</td></tr>
+<tr> <td> Date of Booking </td> <td> Club </td> <td> Room </td>  <td> Cancel Booking</td></tr>
 {% for item in L %}
 <tr>
   <td>
@@ -18,8 +18,13 @@
 {{item['room']}}
 </td>
 
+
+#
+# change delete to checkboxes
+#
 <td>
 <FORM method = "POST">
+
   <button TYPE="submit" name="del" id="style" VALUE="{{item['day'] + ',' + item['room'] + ',' + item['club']}}">Delete </button>
 </FORM>
 </td>
