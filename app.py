@@ -87,6 +87,14 @@ def view():
     if request.method=="GET":
         check = list(utils.db.rooms.find({'club': session['email']}))
         return render_template("view.html", L = check)
+    else:
+        info = request.form['del']
+        day = info.split(',')[0]
+        room = info.split(',')[1]
+        club = info.split(',')[2]
+        utils.del_room(day, room, club)
+        return redirect(url_for("view"))
+
 
 @app.route("/add", methods=["GET", "POST"])
 def add():

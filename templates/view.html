@@ -3,17 +3,30 @@
 {% block content %}
 <br>
 
-  {% for item in L %}
-    {{item['day']}}
-    :
-      {{item['club']}}
-    :
-      {{item['room']}}
-    <br>
+<table>
+<tr> <td> Date of Booking </td> <td> Club </td> <td> Room </td>  <td> Cancel Booking</td></tr>
+{% for item in L %}
+<tr>
+  <td>
+{{item['day']}} </td>
+<td>
+{{item['club']}}
+</td>
+<td>
+{{item['room']}}
+</td>
 
-  {% endfor %}
-  <br>
 
+<td>
+<FORM method = "POST">
+
+  <button TYPE="submit" name="del" id="style" VALUE="{{item['day'] + ',' + item['room'] + ',' + item['club']}}">Delete </button>
+</FORM>
+</td>
+</tr>
+
+{% endfor %}
+</table>
 <center>
 
 </center>
