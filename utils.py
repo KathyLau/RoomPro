@@ -156,7 +156,7 @@ Return:
 """
 def book_room(d, r, e):
     check = list(db.rooms.find({'day': d}))
-    #email(e, "Room Booking", "You are now booked for " + str(r) + " on " + str(d) )
+    email(e, "Room Booking", "You are now booked for " + str(r) + " on " + str(d) )
     if check != []:
         db.rooms.update(
             {
@@ -226,7 +226,7 @@ def del_room(d, r, c):
              }
          }
          )
-        #email(c, "Booking Cancelled", "Your room booking on " + d + " is now cancelled")
+        email(c, "Booking Cancelled", "Your room booking on " + d + " is now cancelled")
         return True
 
 
