@@ -40,6 +40,24 @@ def login():
         else:
             return render_template("login.html")
 
+@app.route("/changepwd", methods=["GET", "POST"])
+@app.route("/changepwd/", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template("changepwd.html")
+    else:
+        email = request.form['email']
+        pwd = request.form['pwd']
+
+        if utils.confirm_user(email):
+            session['logged_in'] = True
+            utils.changepwd(email, pwd)
+            return redirect(url_for("/login"))
+        else:
+            return render_template("changepwd.html")
+
+
+
 @app.route("/adlogin", methods=["GET", "POST"])
 @app.route("/adlogin/", methods=["GET", "POST"])
 def adlogin():

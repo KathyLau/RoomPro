@@ -202,6 +202,33 @@ def change_room(d, r2, c):
         return True
 
 
+
+"""
+change password of an email
+Args:
+    u = email
+    p = password
+Return:
+  True if succeded
+  False if not
+"""
+def changepwd(u, p):
+    check = list(db.rooms.find({'email': u}))
+    if check != []:
+        db.rooms.update(
+            {
+                'email': u
+            },
+            {'$set':
+             {
+                 'pwd' : hash(p)
+             }
+         }
+         )
+        email(c, "Password Changed", "Your password is now " + p)
+        return True
+
+
 """
 *admin usage only
 cancel a booking
