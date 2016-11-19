@@ -215,7 +215,7 @@ Return:
 def changepwd(u, p):
     check = list(db.rooms.find({'email': u}))
     if check != []:
-        db.rooms.update(
+        db.users.update(
             {
                 'email': u
             },
