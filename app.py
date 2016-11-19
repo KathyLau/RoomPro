@@ -42,7 +42,7 @@ def login():
 
 @app.route("/changepwd", methods=["GET", "POST"])
 @app.route("/changepwd/", methods=["GET", "POST"])
-def login():
+def chagepwd():
     if request.method == "GET":
         return render_template("changepwd.html")
     else:
