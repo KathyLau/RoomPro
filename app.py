@@ -42,19 +42,17 @@ def login():
 
 @app.route("/changepwd", methods=["GET", "POST"])
 @app.route("/changepwd/", methods=["GET", "POST"])
-def chagepwd():
+def changepwd():
     if request.method == "GET":
         return render_template("changepwd.html")
     else:
         email = request.form['email']
         pwd = request.form['pwd']
-
-        if list(utils.db.users.find({'email':email})) != []:
-            session['logged_in'] = True
+        try:
             utils.changepwd(email, pwd)
             return redirect(url_for("login"))
-        else:
-            return render_template("changepwd.html")
+        except:
+            return redirect(url_for("changepwd"))
 
 
 
