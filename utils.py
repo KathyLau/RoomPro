@@ -213,7 +213,7 @@ Return:
   False if not
 """
 def changepwd(u, p):
-    check = list(db.rooms.find({'email': u}))
+    check = list(db.users.find({'email': u}))
     if check != []:
         db.users.update(
             {
