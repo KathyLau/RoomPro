@@ -49,10 +49,10 @@ def chagepwd():
         email = request.form['email']
         pwd = request.form['pwd']
 
-        if utils.confirm_user(email):
+        if list(utils.db.users.find({'email':email})) != []:
             session['logged_in'] = True
             utils.changepwd(email, pwd)
-            return redirect(url_for("/login"))
+            return redirect(url_for("login"))
         else:
             return render_template("changepwd.html")
 
