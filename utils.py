@@ -225,7 +225,7 @@ def changepwd(u, p):
              }
          }
          )
-        email(c, "Password Changed", "Your password is now " + p)
+        email(u, "Password Changed", "Your password is now " + p)
         return True
 
 
