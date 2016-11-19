@@ -48,12 +48,9 @@ def changepwd():
     else:
         email = request.form['email']
         pwd = request.form['pwd']
-        try:
-            utils.changepwd(email, pwd)
-            return redirect(url_for("login"))
-        except:
-            return redirect(url_for("changepwd"))
-
+        utils.changepwd(email, pwd)
+        return redirect(url_for("login"))
+        
 
 
 @app.route("/adlogin", methods=["GET", "POST"])
