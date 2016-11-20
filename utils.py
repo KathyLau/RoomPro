@@ -290,8 +290,8 @@ def email(name, subject, message):
 
   TEXT= name + ", " + message
 
-  gmail_sender="dev@stuyclubpub.org"
-  gmail_passwd="dev201617"
+  gmail_sender=""
+  gmail_passwd=""
 
   server= smtplib.SMTP('smtp.gmail.com',587)
   server.ehlo()
