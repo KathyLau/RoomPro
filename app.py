@@ -103,15 +103,9 @@ def view():
         return redirect(url_for("root"))
     if request.method=="GET":
         check = list(utils.db.rooms.find({'club': session['email']}))
-        thismonth = []
         today = str(datetime.date.today())
         month = str(today.split('-')[1])
-        for i in check:
-            print month
-            print i['day'].split('-')[1]
-            if str(month) == str(i['day'].split('-')[1]):
-                thismonth += i
-        return render_template("view.html", L = thismonth)
+        return render_template("view.html", L = check)
     else:
         info = request.form['del']
         day = info.split(',')[0]
