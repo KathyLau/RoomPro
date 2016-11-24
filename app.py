@@ -50,7 +50,7 @@ def changepwd():
         pwd = request.form['pwd']
         utils.changepwd(email, pwd)
         return redirect(url_for("login"))
-        
+
 
 
 @app.route("/adlogin", methods=["GET", "POST"])
@@ -74,6 +74,8 @@ def adlogin():
 
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
+    if 'logged_in' not in session:
+        return redirect(url_for("root"))
     cal = utils.calendardict()
     if request.method=="GET":
         return render_template("dashboard.html", L = cal)
@@ -97,9 +99,17 @@ def dashboard():
 
 @app.route("/view", methods=["GET", "POST"])
 def view():
+    if 'logged_in' not in session:
+        return redirect(url_for("root"))
     if request.method=="GET":
         check = list(utils.db.rooms.find({'club': session['email']}))
-        return render_template("view.html", L = check)
+        thismonth = []
+        today = str(datetime.date.today())
+        month = str(today.split('-')[1])
+        for i in check:
+            if str(month) == i['day'].split('-')[1]:
+                thismonth += i
+        return render_template("view.html", L = thismonth)
     else:
         info = request.form['del']
         day = info.split(',')[0]
