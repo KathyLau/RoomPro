@@ -108,10 +108,13 @@ def dashnext():
         if len(d)< 3:
             session['day'] = d
             today = str(datetime.date.today())
-            month = str(today.split('-')[1] + 1)
+            month = str(today.split('-')[1])
             year = str(today.split('-')[0])
-            if year == "2016":
-                year == "2017"
+            if month == "12":
+                month = "1"
+                year = str((int(year) + 1))
+            else:
+                month = str((int(month) + 1))
             date =  year+"-" +month+'-'+d
             session['day'] = date
             check =list(utils.db.rooms.find({'day':date}))
