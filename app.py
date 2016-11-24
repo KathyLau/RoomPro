@@ -77,7 +77,7 @@ def dashboard():
     if 'logged_in' not in session:
         return redirect(url_for("root"))
     cal = utils.calendardict(0)
-        return render_template("dashboard.html", L = cal)
+    return render_template("dashboard.html", L = cal)
     else:
         d = request.form["day"]
         if len(d)< 3:
