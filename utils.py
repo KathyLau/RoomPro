@@ -93,7 +93,9 @@ def calendardict(i):
     if i == 1:
         if month == 12:
             year +=1
-        month += 1
+            month = 1
+        else:
+            month += 1
         now = list(monthrange(year, month))
     currPos = 0
     date = 1
