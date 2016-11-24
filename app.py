@@ -72,12 +72,35 @@ def adlogin():
 
 
 
+@app.route("/dashboard", methods=["GET", "POST"])
+def dashboard():
+    if 'logged_in' not in session:
+        return redirect(url_for("root"))
+    cal = utils.calendardict(0)
+        return render_template("dashboard.html", L = cal)
+    else:
+        d = request.form["day"]
+        if len(d)< 3:
+            session['day'] = d
+            today = str(datetime.date.today())
+            month = str(today.split('-')[1])
+            year = str(today.split('-')[0])
+            date =  year+"-" +month+'-'+d
+            session['day'] = date
+            check =list(utils.db.rooms.find({'day':date}))
+            return render_template("dashboard.html", L = cal, G = check)
+        else:
+            session['room'] = d
+            utils.book_room(session['day'], session['room'], session['email'])
+            return redirect(url_for("view"))
+
+
 @app.route("/dashboard/<int:page>", methods=["GET", "POST"])
 def dashboard(page):
     if 'logged_in' not in session:
         return redirect(url_for("root"))
-    cal = utils.calendardict()
-    cal2 = utils.calendardict2()
+    cal = utils.calendardict(0)
+    cal2 = utils.calendardict2(1)
     if request.method=="GET" and page == 0:
         return render_template("dashboard.html", L = cal)
     if request.method=="GET" and page == 1:
