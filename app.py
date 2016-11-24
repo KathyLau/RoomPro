@@ -97,7 +97,7 @@ def dashboard():
 
 
 @app.route("/dashboard/<int:page>", methods=["GET", "POST"])
-def dashboard(page):
+def dashboardpage(page):
     if 'logged_in' not in session:
         return redirect(url_for("root"))
     cal = utils.calendardict(0)
