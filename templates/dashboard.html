@@ -2,7 +2,12 @@
 
 {% block content %}
 <br>
-<a href="/dashnext">Next month </a>
+{% if message == 1 %}
+<a href="/dashnext">{{ "Next Month"}} </a>
+{% else %}
+<a href="/dashboard">{{ "Prev Month"}} </a>
+
+{% endif %}
 <table>
   <tr>
     <td> Mo </td>

@@ -89,7 +89,7 @@ def dashboard():
             date =  year+"-" +month+'-'+d
             session['day'] = date
             check =list(utils.db.rooms.find({'day':date}))
-            return render_template("dashboard.html", L = cal, G = check)
+            return render_template("dashboard.html", L = cal, G = check, message=0)
         else:
             session['room'] = d
             utils.book_room(session['day'], session['room'], session['email'])
@@ -118,7 +118,7 @@ def dashnext():
             date =  year+"-" +month+'-'+d
             session['day'] = date
             check =list(utils.db.rooms.find({'day':date}))
-            return render_template("dashboard.html", L = cal, G = check)
+            return render_template("dashboard.html", L = cal, G = check, message=1)
         else:
             session['room'] = d
             utils.book_room(session['day'], session['room'], session['email'])
