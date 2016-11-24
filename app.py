@@ -107,7 +107,9 @@ def view():
         today = str(datetime.date.today())
         month = str(today.split('-')[1])
         for i in check:
-            if str(month) == i['day'].split('-')[1]:
+            print month
+            print i['day'].split('-')[1]
+            if str(month) == str(i['day'].split('-')[1]):
                 thismonth += i
         return render_template("view.html", L = thismonth)
     else:
