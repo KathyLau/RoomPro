@@ -36,7 +36,7 @@ def login():
             session['logged_in'] = True
             session['email'] = email
             session['pwd'] = pwd
-            return redirect(url_for("dashboard/0"))
+            return redirect(url_for("dashboard"))
         else:
             return render_template("login.html")
 
