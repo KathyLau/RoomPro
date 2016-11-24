@@ -36,7 +36,7 @@ def login():
             session['logged_in'] = True
             session['email'] = email
             session['pwd'] = pwd
-            return redirect(url_for("dashboard"))
+            return redirect(url_for("dashboard/0"))
         else:
             return render_template("login.html")
 
@@ -72,12 +72,15 @@ def adlogin():
 
 
 
-@app.route("/dashboard", methods=["GET", "POST"])
-def dashboard():
+@app.route("/dashboard/<int:page>", methods=["GET", "POST"])
+def dashboard(page):
     if 'logged_in' not in session:
         return redirect(url_for("root"))
     cal = utils.calendardict()
-    if request.method=="GET":
+    cal2 = utils.calendardict2()
+    if request.method=="GET" and page == 0:
+        return render_template("dashboard.html", L = cal)
+    if request.method=="GET" and page == 1:
         return render_template("dashboard.html", L = cal)
     else:
         d = request.form["day"]
