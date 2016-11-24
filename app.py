@@ -102,7 +102,7 @@ def dashnext():
         return redirect(url_for("root"))
     cal = utils.calendardict(1)
     if request.method=="GET":
-        return render_template("dashboard.html", L = cal)
+        return render_template("dashboard.html", L = cal, message=1)
     else:
         d = request.form["day"]
         if len(d)< 3:
