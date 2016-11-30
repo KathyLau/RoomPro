@@ -58,6 +58,20 @@ def register_user(name, email, pwd):
 
 
 """
+Finds club name with email.
+Args:
+    email - club user email address
+Returns:
+    True if club exist
+    False if club does not exist
+"""
+def find_club(email):
+    name =  list(db.users.find({'email':email}))
+    if name != []:
+        return name['name']
+    return False
+
+"""
 Confirms a user with email and osis.
 Args:
     email - club user email address

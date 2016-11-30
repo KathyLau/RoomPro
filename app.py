@@ -192,6 +192,8 @@ def adview():
         newcheck = []
         for item in check:
             if item['club'] != '':
+                name = utils.find_club(item['club'])
+                item.append(name)
                 newcheck.append(item)
         return render_template("adview.html", L = sorted(newcheck, key=lambda k: k['day']))
 
