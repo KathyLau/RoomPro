@@ -50,7 +50,7 @@ def changepwd():
         pwd = request.form['pwd']
         utils.changepwd(email, pwd)
         return redirect(url_for("login"))
-        
+
 
 
 @app.route("/adlogin", methods=["GET", "POST"])
@@ -74,9 +74,11 @@ def adlogin():
 
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
-    cal = utils.calendardict()
+    if 'logged_in' not in session:
+        return redirect(url_for("root"))
+    cal = utils.calendardict(0)
     if request.method=="GET":
-        return render_template("dashboard.html", L = cal)
+        return render_template("dashboard.html", L = cal, message=0)
     else:
         d = request.form["day"]
         if len(d)< 3:
@@ -87,7 +89,36 @@ def dashboard():
             date =  year+"-" +month+'-'+d
             session['day'] = date
             check =list(utils.db.rooms.find({'day':date}))
-            return render_template("dashboard.html", L = cal, G = check)
+            return render_template("dashboard.html", L = cal, G = check, message=0)
+        else:
+            session['room'] = d
+            utils.book_room(session['day'], session['room'], session['email'])
+            return redirect(url_for("view"))
+
+
+@app.route("/dashnext", methods=["GET", "POST"])
+def dashnext():
+    if 'logged_in' not in session:
+        return redirect(url_for("root"))
+    cal = utils.calendardict(1)
+    if request.method=="GET":
+        return render_template("dashboard.html", L = cal, message=1)
+    else:
+        d = request.form["day"]
+        if len(d)< 3:
+            session['day'] = d
+            today = str(datetime.date.today())
+            month = str(today.split('-')[1])
+            year = str(today.split('-')[0])
+            if month == "12":
+                month = "1"
+                year = str((int(year) + 1))
+            else:
+                month = str((int(month) + 1))
+            date =  year+"-" +month+'-'+d
+            session['day'] = date
+            check =list(utils.db.rooms.find({'day':date}))
+            return render_template("dashboard.html", L = cal, G = check, message=1)
         else:
             session['room'] = d
             utils.book_room(session['day'], session['room'], session['email'])
@@ -97,8 +128,12 @@ def dashboard():
 
 @app.route("/view", methods=["GET", "POST"])
 def view():
+    if 'logged_in' not in session:
+        return redirect(url_for("root"))
     if request.method=="GET":
         check = list(utils.db.rooms.find({'club': session['email']}))
+        today = str(datetime.date.today())
+        month = str(today.split('-')[1])
         return render_template("view.html", L = check)
     else:
         info = request.form['del']
@@ -157,6 +192,8 @@ def adview():
         newcheck = []
         for item in check:
             if item['club'] != '':
+                name = utils.find_club(item['club'])
+                item.append(name)
                 newcheck.append(item)
         return render_template("adview.html", L = sorted(newcheck, key=lambda k: k['day']))
 
