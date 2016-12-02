@@ -159,13 +159,20 @@ def add_room(l):
         month = str(today.split('-')[1])
         year = str(today.split('-')[0])
         date = year + '-' + month + '-'
+        month2 = str((int(month)+1)%12)
+        if month=="12":
+            year2=str(int(year)+1)
+        date2 = year2 + '-' + month2 + '-'
+
         d = 1
 
         if  len(room)>2 and check == []:
             while d < 32:
                 t = {'day': date + str(d) , 'room':room, 'club': ''}
+                t2 = {'day': date2 + str(d) , 'room':room, 'club': ''}
                 d+=1
                 db.rooms.insert(t)
+                db.rooms.insert(t2)
 
 """
 adds club name to end of date-room-club
