@@ -5,7 +5,7 @@ import calendar
 import datetime
 
 app = Flask(__name__)
-app.secret_key = ''
+app.secret_key = 'dogs'
 
 @app.route('/')
 def root():
